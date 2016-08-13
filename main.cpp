@@ -1,25 +1,20 @@
 #include "mainwindow.h"
-#include <QApplication>
+#include "application.h"
 #include <QList>
+
+Application* a;
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    a = new Application(argc, argv);
 
     #if (defined Q_OS_MACX)
-        a.setQuitOnLastWindowClosed(false);
+        a->setQuitOnLastWindowClosed(false);
     #endif
 
-    QString FileToOpen = "";
-
-    QStringList args = a.arguments();
-    args.removeFirst();
-    for (QString arg : args) {
-        FileToOpen = arg;
-    }
-
-    MainWindow w(FileToOpen);
+    MainWindow w;
+    a->firstMainWindow = &w;
     w.show();
 
-    return a.exec();
+    return a->exec();
 }

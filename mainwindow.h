@@ -10,6 +10,9 @@
 #include <QCloseEvent>
 #include <QTextCursor>
 #include <QInputDialog>
+#include "application.h"
+
+class Application;
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +25,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QString OpenWithFile = "", QWidget *parent = 0);
     ~MainWindow();
+
+    bool allowClose();
 
 private slots:
     void on_actionSave_triggered();
@@ -77,6 +82,7 @@ private:
     QTextDocument* currentDocument;
     QTextCursor currentCursor;
     QString currentFile = "";
+    bool hasHadEdits = false;
 };
 
 #endif // MAINWINDOW_H

@@ -31,8 +31,6 @@
             </array>
             <key>CFBundleTypeIconFile</key>
             <string>fileicon.icns</string>
-            <key>LSHandlerRank</key>
-            <string>Owner</string>
         </dict>
     </array>
 </dict>

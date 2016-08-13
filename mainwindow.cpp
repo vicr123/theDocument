@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+extern Application* a;
+
 MainWindow::MainWindow(QString OpenWithFile, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -32,6 +34,9 @@ MainWindow::MainWindow(QString OpenWithFile, QWidget *parent) :
 
     connect(currentDocument, &QTextDocument::modificationChanged, [=](bool modified) {
         this->setWindowModified(modified);
+        if (modified) {
+            hasHadEdits = true;
+        }
     });
     connect(currentDocument, &QTextDocument::undoAvailable, [=](bool available) {
         ui->actionUndo->setEnabled(available);
@@ -51,11 +56,15 @@ MainWindow::MainWindow(QString OpenWithFile, QWidget *parent) :
         currentFile = OpenWithFile;
         this->setWindowTitle("");
         this->setWindowFilePath(currentFile);
+        currentDocument->setModified(false);
     }
 }
 
 MainWindow::~MainWindow()
 {
+    if (a->firstMainWindow == this) {
+        a->firstMainWindow = NULL;
+    }
     delete ui;
 }
 
@@ -346,4 +355,8 @@ void MainWindow::on_actionClose_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::exit();
+}
+
+bool MainWindow::allowClose() {
+    return !hasHadEdits;
 }
