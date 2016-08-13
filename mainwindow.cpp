@@ -15,14 +15,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionBold->setShortcut(QKeySequence::Bold);
     ui->actionItalic->setShortcut(QKeySequence::Italic);
     ui->actionUnderline->setShortcut(QKeySequence::Underline);
+    ui->actionCopy->setShortcut(QKeySequence::Copy);
+    ui->actionCut->setShortcut(QKeySequence::Cut);
+    ui->actionPaste->setShortcut(QKeySequence::Paste);
 
     ui->mainToolBar->insertWidget(ui->actionBold, ui->fontInfoFrame);
 
-    currentDocument = new QTextDocument();
+    currentDocument = ui->documentView->document();
     currentDocument->setDefaultStyleSheet("span.pagebrk:before {\n"
                                           "content: \"---PAGE BREAK---\";"
                                           "}");
-    ui->documentView->setDocument(currentDocument);
+    //ui->documentView->setDocument(currentDocument);
 
     currentCursor = QTextCursor(currentDocument);
 
@@ -115,6 +118,7 @@ void MainWindow::on_actionSave_As_triggered()
 {
     QStringList filters;
     filters << "theDocument HTML File (*.tdh)"
+            << "Web Page (*.html)"
             << "OpenDocument Text (*.odt)";
     QFileDialog* dialog = new QFileDialog(this);
     dialog->setAcceptMode(QFileDialog::AcceptSave);
@@ -126,7 +130,7 @@ void MainWindow::on_actionSave_As_triggered()
     connect(dialog, &QFileDialog::accepted, [=]() {
         dialog->deleteLater(); //This deletes the dialog once we return to the event loop.
 
-        if (dialog->selectedNameFilter() == "theDocument HTML File (*.tdh)") {
+        if (dialog->selectedNameFilter() == "theDocument HTML File (*.tdh)" || dialog->selectedNameFilter() == "Web Page (*.html)") {
             QFile file(dialog->selectedFiles().first());
             if (file.open(QFile::WriteOnly)) {
                 file.write(currentDocument->toHtml().toUtf8());
@@ -278,8 +282,9 @@ void MainWindow::on_actionInsert_Table_triggered()
     currentCursor.insertTable(row, col, tableFormatting);
 }
 
-void MainWindow::on_fontSize_valueChanged(int arg1)
+void MainWindow::on_fontSize_valueChanged(double arg1)
 {
+
     /*QTextCharFormat modifier = currentCursor.charFormat();
 
     QFont currentFont = modifier.font();
@@ -300,3 +305,18 @@ void MainWindow::on_fontFamily_currentFontChanged(const QFont &f)
     ui->documentView->setCurrentFont(f);
 }
 
+
+void MainWindow::on_actionCopy_triggered()
+{
+    ui->documentView->copy();
+}
+
+void MainWindow::on_actionCut_triggered()
+{
+    ui->documentView->cut();
+}
+
+void MainWindow::on_actionPaste_triggered()
+{
+    ui->documentView->paste();
+}

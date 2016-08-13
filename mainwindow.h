@@ -50,11 +50,17 @@ private slots:
 
     void on_actionInsert_Table_triggered();
 
-    void on_fontSize_valueChanged(int arg1);
-
     void on_fontFamily_currentFontChanged(const QFont &f);
 
     void on_actionSave_As_triggered();
+
+    void on_actionCopy_triggered();
+
+    void on_actionCut_triggered();
+
+    void on_actionPaste_triggered();
+
+    void on_fontSize_valueChanged(double arg1);
 
 private:
     Ui::MainWindow *ui;
