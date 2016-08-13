@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QString OpenWithFile, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     currentDocument->setDefaultStyleSheet("span.pagebrk:before {\n"
                                           "content: \"---PAGE BREAK---\";"
                                           "}");
+
     //ui->documentView->setDocument(currentDocument);
 
     currentCursor = QTextCursor(currentDocument);
@@ -41,6 +42,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     on_documentView_currentCharFormatChanged(ui->documentView->currentCharFormat());
 
+    if (OpenWithFile != "") {
+        QFile file(OpenWithFile);
+        file.open(QFile::ReadOnly);
+        currentDocument->setHtml(QString(file.readAll()));
+        file.close();
+
+        currentFile = OpenWithFile;
+        this->setWindowTitle("");
+        this->setWindowFilePath(currentFile);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -136,6 +147,8 @@ void MainWindow::on_actionSave_As_triggered()
                 file.write(currentDocument->toHtml().toUtf8());
                 file.close();
                 currentFile = dialog->selectedFiles().first();
+                this->setWindowTitle("");
+                this->setWindowFilePath(currentFile);
                 currentDocument->setModified(false);
             } else {
                 showMessageBox("Save Error", "Your document couldn't be saved.");
@@ -177,6 +190,10 @@ void MainWindow::on_actionOpen_triggered()
             file.open(QFile::ReadOnly);
             currentDocument->setHtml(QString(file.readAll()));
             file.close();
+
+            currentFile = dialog->selectedFiles().first();
+            this->setWindowTitle("");
+            this->setWindowFilePath(currentFile);
         }
         currentDocument->setModified(false);
 
@@ -319,4 +336,14 @@ void MainWindow::on_actionCut_triggered()
 void MainWindow::on_actionPaste_triggered()
 {
     ui->documentView->paste();
+}
+
+void MainWindow::on_actionClose_triggered()
+{
+    this->close();
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    QApplication::exit();
 }

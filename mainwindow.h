@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QString OpenWithFile = "", QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
@@ -61,6 +61,10 @@ private slots:
     void on_actionPaste_triggered();
 
     void on_fontSize_valueChanged(double arg1);
+
+    void on_actionClose_triggered();
+
+    void on_actionExit_triggered();
 
 private:
     Ui::MainWindow *ui;

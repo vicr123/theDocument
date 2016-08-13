@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include <QList>
 
 int main(int argc, char *argv[])
 {
@@ -9,7 +10,15 @@ int main(int argc, char *argv[])
         a.setQuitOnLastWindowClosed(false);
     #endif
 
-    MainWindow w;
+    QString FileToOpen = "";
+
+    QStringList args = a.arguments();
+    args.removeFirst();
+    for (QString arg : args) {
+        FileToOpen = arg;
+    }
+
+    MainWindow w(FileToOpen);
     w.show();
 
     return a.exec();
