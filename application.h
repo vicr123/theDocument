@@ -4,7 +4,15 @@
 #include <QObject>
 #include <QApplication>
 #include <QFileOpenEvent>
+#include <QWindow>
 #include "mainwindow.h"
+
+#ifdef Q_OS_MAC
+#include <objc/objc.h>
+#include <objc/message.h>
+void setupDockClickHandler();
+bool dockClickHandler(id self,SEL _cmd,...);
+#endif
 
 class MainWindow;
 

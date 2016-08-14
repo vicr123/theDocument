@@ -9,6 +9,8 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 macx: {
+    LIBS += -framework CoreFoundation -framework Carbon -lobjc
+
     TARGET = theDocument
     ICON = $${PWD}/icon.icns
     QMAKE_INFO_PLIST = $${PWD}/Info.plist

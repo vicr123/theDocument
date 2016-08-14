@@ -24,12 +24,7 @@ MainWindow::MainWindow(QString OpenWithFile, QWidget *parent) :
     ui->mainToolBar->insertWidget(ui->actionBold, ui->fontInfoFrame);
 
     currentDocument = ui->documentView->document();
-    currentDocument->setDefaultStyleSheet("span.pagebrk:before {\n"
-                                          "content: \"---PAGE BREAK---\";"
-                                          "}");
-
-    //ui->documentView->setDocument(currentDocument);
-
+    ui->documentView->setFontPointSize(12);
     currentCursor = QTextCursor(currentDocument);
 
     connect(currentDocument, &QTextDocument::modificationChanged, [=](bool modified) {
@@ -350,11 +345,6 @@ void MainWindow::on_actionPaste_triggered()
 void MainWindow::on_actionClose_triggered()
 {
     this->close();
-}
-
-void MainWindow::on_actionExit_triggered()
-{
-    QApplication::exit();
 }
 
 bool MainWindow::allowClose() {

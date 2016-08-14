@@ -56,7 +56,7 @@
        <item>
         <widget class="QDoubleSpinBox" name="fontSize">
          <property name="minimum">
-          <double>1.000000000000000</double>
+          <double>7.000000000000000</double>
          </property>
          <property name="maximum">
           <double>3000.000000000000000</double>
@@ -112,7 +112,6 @@
     <addaction name="actionSave_As"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
-    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -152,11 +151,18 @@
     </property>
     <addaction name="actionInsert_Table"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuFormat"/>
    <addaction name="menuInsert"/>
    <addaction name="menuTable"/>
+   <addaction name="menuHelp"/>
   </widget>
   <action name="actionNew">
    <property name="text">
@@ -211,6 +217,9 @@
    <property name="text">
     <string>Bold</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionItalic">
    <property name="checkable">
@@ -219,6 +228,9 @@
    <property name="text">
     <string>Italic</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionUnderline">
    <property name="checkable">
@@ -226,6 +238,9 @@
    </property>
    <property name="text">
     <string>Underline</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionStrikeout">
@@ -269,17 +284,17 @@
     <string>Paste</string>
    </property>
   </action>
-  <action name="actionExit">
-   <property name="text">
-    <string>Exit</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::QuitRole</enum>
-   </property>
-  </action>
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
    </property>
   </action>
  </widget>
