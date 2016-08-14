@@ -26,6 +26,13 @@ MainWindow::MainWindow(QString OpenWithFile, QWidget *parent) :
     currentDocument = ui->documentView->document();
     ui->documentView->setFontPointSize(12);
     currentCursor = QTextCursor(currentDocument);
+    baseFont = ui->documentView->font();
+
+    ui->headingTypes->addItem("Normal Text");
+    ui->headingTypes->addItem("Document Title");
+    ui->headingTypes->addItem("Document Subtitle");
+    ui->headingTypes->addItem("Heading 1");
+    ui->headingTypes->addItem("Heading 2");
 
     connect(currentDocument, &QTextDocument::modificationChanged, [=](bool modified) {
         this->setWindowModified(modified);
@@ -349,4 +356,50 @@ void MainWindow::on_actionClose_triggered()
 
 bool MainWindow::allowClose() {
     return !hasHadEdits;
+}
+
+void MainWindow::on_headingTypes_currentIndexChanged(int index)
+{
+    QFont editedFont = baseFont;
+    QColor editedColor(0, 0, 0);
+    switch (index) {
+    case 0: //Normal Text
+
+        break;
+    case 1: //Document Title
+        editedFont.setPointSize(30);
+        editedFont.setWeight(10);
+        break;
+    case 2: //Document Subtitle
+        editedFont.setPointSize(17);
+        editedFont.setWeight(10);
+        editedColor = QColor::fromRgb(100, 100, 100);
+        break;
+    case 3: //Heading 1
+        editedFont.setPointSize(15);
+        editedFont.setWeight(10);
+        editedColor = QColor::fromRgb(0, 100, 255);
+        break;
+    case 4: //Heading 2
+        editedFont.setPointSize(14);
+        editedColor = QColor::fromRgb(0, 100, 255);
+
+        break;
+    }
+
+    ui->documentView->setCurrentFont(editedFont);
+    ui->documentView->setTextColor(editedColor);
+
+    ui->documentView->setFocus();
+}
+
+void MainWindow::on_documentView_EnterPressed()
+{
+    switch (ui->headingTypes->currentIndex()) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+        ui->headingTypes->setCurrentIndex(0);
+    }
 }

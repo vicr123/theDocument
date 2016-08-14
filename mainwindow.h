@@ -69,6 +69,10 @@ private slots:
 
     void on_actionClose_triggered();
 
+    void on_headingTypes_currentIndexChanged(int index);
+
+    void on_documentView_EnterPressed();
+
 private:
     Ui::MainWindow *ui;
 
@@ -80,6 +84,7 @@ private:
     QTextDocument* currentDocument;
     QTextCursor currentCursor;
     QString currentFile = "";
+    QFont baseFont;
     bool hasHadEdits = false;
 };
 

@@ -66,16 +66,29 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QComboBox" name="headingTypes"/>
+       </item>
       </layout>
      </widget>
     </item>
     <item>
-     <widget class="QTextEdit" name="documentView">
+     <widget class="TextEdit" name="documentView">
       <property name="font">
        <font>
         <family>Arial</family>
         <pointsize>12</pointsize>
        </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTextEdit {
+	background-color: white;
+	color: black;
+	padding: 5px;
+}</string>
       </property>
      </widget>
     </item>
@@ -308,6 +321,16 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>TextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>textedit.h</header>
+   <slots>
+    <signal>EnterPressed()</signal>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>
