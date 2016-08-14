@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     a = new Application(argc, argv);
 
-    #if (defined Q_OS_MACX)
+    #ifdef Q_OS_MACX
         a->setQuitOnLastWindowClosed(false);
     #endif
 

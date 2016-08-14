@@ -84,7 +84,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 QMessageBox::StandardButton MainWindow::showMessageBox(QString title, QString text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton) {
     QMessageBox* box = new QMessageBox(this);
-    #if (defined Q_OS_MACX)
+    #ifdef Q_OS_MACX
         box->setText(title);
         box->setInformativeText(text);
     #else
